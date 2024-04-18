@@ -1,10 +1,6 @@
-FROM nginx:latest
+FROM nginx
 
-COPY webapp /usr/share/nginx/html
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./html /usr/share/nginx/html
 
-# 포트 80 열기
-EXPOSE 80
-
-# Nginx 실행
+# Nginx 서버 실행
 CMD ["nginx", "-g", "daemon off;"]
