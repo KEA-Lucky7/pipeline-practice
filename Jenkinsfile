@@ -15,19 +15,11 @@ pipeline {
     }
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
                 script {
-                    // Docker 이미지 빌드
-                    sh "docker build -t ${DOCKER_IMAGE} ."
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Docker 로그인 (Docker Hub 로그인 정보가 크레덴셜스에 저장되어 있어야 함)
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh "docker build -t $USERNAME/${DOCKER_IMAGE} ."
                         sh "docker login -u $USERNAME -p $PASSWORD"
                         // Docker 이미지 푸시
                         sh "docker push $USERNAME/${DOCKER_IMAGE}"
