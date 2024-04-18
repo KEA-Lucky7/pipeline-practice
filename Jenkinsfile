@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'lucky-nginx'
         KUBECONFIG = '~/.kube/config'
         DEPLOYMENT_NAME = 'nginx-deployment'
-        NAMESPACE = 'default'
+        NAMESPACE = 'kube-system'
     }
 
     triggers {
@@ -33,7 +33,7 @@ pipeline {
                 script {
                     // Kubernetes에 배포
                     sh """
-                    kubectl --kubeconfig ${KUBECONFIG} set image deployment/${DEPLOYMENT_NAME} nginx-container=${DOCKER_IMAGE}:${DOCKER_TAG} --namespace=${NAMESPACE}
+                    kubectl --kubeconfig ${KUBECONFIG} set image deployment/${DEPLOYMENT_NAME} nginx-container=hyunseoklee99/${DOCKER_IMAGE} --namespace=${NAMESPACE}
                     """
                 }
             }
