@@ -32,18 +32,7 @@ pipeline {
             steps {
                 script {
                     // Kubernetes에 배포
-                    sh """
-                    kubectl --kubeconfig ${KUBECONFIG} set image deployment/${DEPLOYMENT_NAME} nginx-container=hyunseoklee99/${DOCKER_IMAGE} --namespace=${NAMESPACE}
-                    """
-                }
-            }
-        }
-
-        stage('Check deployment') {
-            steps {
-                script {
-                    // 배포 상태 확인
-                    sh "kubectl --kubeconfig ${KUBECONFIG} rollout status deployment/${DEPLOYMENT_NAME} --namespace=${NAMESPACE}"
+                    sh "kubectl apply -f deployment.yaml"
                 }
             }
         }
