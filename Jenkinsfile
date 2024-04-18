@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl rollout restart -f deployment.yaml --kubeconfig=$KUBECONFIG'
+                        sh 'kubectl create -f deployment.yaml --kubeconfig=$KUBECONFIG'
                     }
                 }
             }
