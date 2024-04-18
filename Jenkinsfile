@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         // 환경 변수 설정
-        DOCKER_IMAGE = 'nginx-custom'
-        DOCKER_TAG = 'latest'
+        DOCKER_IMAGE = 'lucky-nginx'
         KUBECONFIG = '~/.kube/config'
         DEPLOYMENT_NAME = 'nginx-deployment'
         NAMESPACE = 'default'
@@ -16,18 +15,11 @@ pipeline {
     }
 
     stages {
-    //     stage('Clone repository') {
-    //         steps {
-    //             // GitHub에서 코드 클론
-    //             git url: 'https://github.com/KEA-Lucky7/pipeline-practice.git', branch: 'main'
-    //         }
-    //     }
-
         stage('Build Docker Image') {
             steps {
                 script {
                     // Docker 이미지 빌드
-                    sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                    sh "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
@@ -39,7 +31,7 @@ pipeline {
                         sh "docker login -u $USERNAME -p $PASSWORD"
                     }
                     // Docker 이미지 푸시
-                    sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    sh "docker push $USERNAME/${DOCKER_IMAGE}"
                 }
             }
         }
