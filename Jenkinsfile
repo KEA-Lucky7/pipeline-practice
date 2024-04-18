@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     // Kubernetes에 배포
-                    sh "kubectl apply -f deployment.yaml"
+                    sh "kubectl apply -f deployment.yaml --kubeconfig=kubeconfig"
                 }
             }
         }
