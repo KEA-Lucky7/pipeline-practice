@@ -29,9 +29,9 @@ pipeline {
                     // Docker 로그인 (Docker Hub 로그인 정보가 크레덴셜스에 저장되어 있어야 함)
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker login -u $USERNAME -p $PASSWORD"
+                        // Docker 이미지 푸시
+                        sh "docker push $USERNAME/${DOCKER_IMAGE}"
                     }
-                    // Docker 이미지 푸시
-                    sh "docker push $USERNAME/${DOCKER_IMAGE}"
                 }
             }
         }
