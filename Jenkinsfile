@@ -31,8 +31,9 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Kubernetes에 배포
-                    sh "kubectl apply -f deployment.yaml --kubeconfig=kubeconfig"
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh 'kubectl apply -f deployment.yaml --kubeconfig=$KUBECONFIG'
+                    }
                 }
             }
         }
